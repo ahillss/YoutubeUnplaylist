@@ -3,13 +3,20 @@ var text=`
 void((()=>{
     function unplaylist() {
         document.querySelector('[aria-label="Save to playlist"]').click();
-        setTimeout(() => {
-            document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]').click();
-            document.querySelectorAll('[aria-checked="true"]').forEach(x => {x.click();});
-        }, 500);
+
+        var checkExist = setInterval(() => {
+            var m = document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
+            
+            if (m) {
+                m.click();
+                document.querySelectorAll('[aria-checked="true"]').forEach(x => {x.click();});
+                clearInterval(checkExist);
+            }
+        }, 200);
     }
 
-    var checkExist = setInterval(() => {
+    
+    var checkExist2 = setInterval(() => {
         var m = document.querySelector("#menu-container");
         
         if (m) {
@@ -25,7 +32,7 @@ void((()=>{
             //m.querySelector("#top-level-buttons-computed").appendChild(element);
             m.querySelector("#menu").childNodes[0].appendChild(element);
             
-            clearInterval(checkExist);
+            clearInterval(checkExist2);
         }
     }, 1000);
 })());
