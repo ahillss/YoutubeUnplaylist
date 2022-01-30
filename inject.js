@@ -3,13 +3,13 @@ var text=`
         function unplaylist() {
             document.querySelector('[aria-label="Save to playlist"]').click();
 
-            var checkExist = setInterval(() => {
+            var checkExist1 = setInterval(() => {
                 var m = document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
                 
                 if (m) {
                     m.click();
                     document.querySelectorAll('[aria-checked="true"]').forEach(x => {x.click();});
-                    clearInterval(checkExist);
+                    clearInterval(checkExist1);
                 }
             }, 200);
         }
@@ -18,11 +18,9 @@ var text=`
             var m = document.querySelector("#menu-container");
             
             if (m) {
-                var element = document.createElement("input");
+                var element = document.createElement("button");
                 
-                element.type = "button";
-                element.value = "UNPLAYLIST";
-                element.title = "Unplaylist";
+                element.innerHTML = "UNPLAYLIST";
                 element.style.backgroundColor = "transparent";
                 element.style.border = "none";
                 element.onclick = unplaylist;
