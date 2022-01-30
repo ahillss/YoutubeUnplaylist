@@ -9,8 +9,11 @@ function unplaylist() {
                     
             setTimeout(() => {
                 document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]').click();
-                document.querySelectorAll('[aria-checked="true"]').forEach((x) => {x.click();});
             }, 200);
+
+            setTimeout(() => {
+                document.querySelectorAll('[aria-checked="true"]').forEach((x) => {x.click();});
+            }, 2000);
         }
     }, 100);
 }
