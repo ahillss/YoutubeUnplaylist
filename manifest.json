@@ -5,7 +5,7 @@
   "description": "On youtube videos, adds a button to automatically remove the current video from all playlists",
   "host_permissions": [ "*://*.youtube.com/*" ],
   "content_scripts": [{
-    "matches": [ "*://*.youtube.com/watch*" ],
+    "matches": [ "*://*.youtube.com/*" ],
     "run_at":"document_end",
     "js": [ "inject.js" ]
   }],
