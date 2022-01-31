@@ -9,7 +9,9 @@
             if (btn && iron) {
                 clearInterval(checkExist);
                 btn.click();
-                setTimeout(() => { document.querySelectorAll('[aria-checked="true"]').forEach((x) => {x.click();}); }, 1000);
+                setTimeout(() => { 
+                    document.querySelectorAll('[aria-checked="true"]').forEach(x => x.click()); 
+                }, 1000);
             }
         }, 100);
     }
@@ -41,6 +43,5 @@
         }, 1000);
     }
 
-    go();
     document.addEventListener('yt-navigate-finish', go);
 })();
