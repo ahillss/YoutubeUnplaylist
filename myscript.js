@@ -4,7 +4,7 @@
 
         var checkExist = setInterval(() => {
             var btn = document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
-            var iron=document.querySelector("tp-yt-iron-overlay-backdrop");
+            var iron = document.querySelector("tp-yt-iron-overlay-backdrop");
             
             if (btn && iron) {
                 clearInterval(checkExist);
