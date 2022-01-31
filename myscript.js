@@ -14,14 +14,20 @@
         }, 100);
     }
     
-    function createButton() {
-        var element = document.createElement("button");
-        element.id = "UNPLAYLIST";
-        element.innerHTML = "UNPLAYLIST";
-        element.style.backgroundColor = "transparent";
-        element.style.border = "none";
-        element.onclick = unplaylist;
-        return element;
+    function createAttachButton(m) {
+        if(document.getElementById("UNPLAYLIST")) {
+            return;
+        }
+        
+        var b = document.createElement("button");
+        b.id = "UNPLAYLIST";
+        b.innerHTML = "UNPLAYLIST";
+        b.style.backgroundColor = "transparent";
+        b.style.border = "none";
+        b.onclick = unplaylist;
+
+        //m.querySelector("#top-level-buttons-computed").appendChild(b);
+        m.querySelector("#menu").childNodes[0].appendChild(b);
     }
 
     function go() {
@@ -34,11 +40,7 @@
             
             if (m) {                
                 clearInterval(checkExist);
-                
-                if(!document.getElementById("UNPLAYLIST")) {
-                    //m.querySelector("#top-level-buttons-computed").appendChild(createButton());
-                    m.querySelector("#menu").childNodes[0].appendChild(createButton());
-                }
+                createAttachButton(m);
             }
         }, 1000);
     }
