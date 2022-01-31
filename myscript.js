@@ -4,22 +4,17 @@
 
         var checkExist = setInterval(() => {
             var m = document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
+            var iron=document.querySelector("tp-yt-iron-overlay-backdrop");
             
-            if (m) {
+            if (m && iron) {
                 clearInterval(checkExist);
-                        
-                setTimeout(() => {
-                    document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]').click();
-                }, 200);
-
-                setTimeout(() => {
-                    document.querySelectorAll('[aria-checked="true"]').forEach((x) => {x.click();});
-                }, 2000);
+                document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]').click();
+                setTimeout(() => {  document.querySelectorAll('[aria-checked="true"]').forEach((x) => {x.click();}); }, 1000);
             }
         }, 100);
     }
 
-    function doThing() {
+    function go() {
         if(!location.pathname.startsWith('/watch')) {
             return;
         }
@@ -46,7 +41,6 @@
         }, 1000);
     }
 
-    document.addEventListener('yt-navigate-finish', doThing);
-
-    doThing();
+    go();
+    document.addEventListener('yt-navigate-finish', go);
 })();
