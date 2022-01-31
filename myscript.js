@@ -3,13 +3,13 @@
         document.querySelector('[aria-label="Save to playlist"]').click();
 
         var checkExist = setInterval(() => {
-            var m = document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
+            var btn = document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
             var iron=document.querySelector("tp-yt-iron-overlay-backdrop");
             
-            if (m && iron) {
+            if (btn && iron) {
                 clearInterval(checkExist);
-                document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]').click();
-                setTimeout(() => {  document.querySelectorAll('[aria-checked="true"]').forEach((x) => {x.click();}); }, 1000);
+                btn.click();
+                setTimeout(() => { document.querySelectorAll('[aria-checked="true"]').forEach((x) => {x.click();}); }, 1000);
             }
         }, 100);
     }
