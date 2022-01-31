@@ -9,11 +9,19 @@
             if (btn && iron) {
                 clearInterval(checkExist);
                 btn.click();
-                setTimeout(() => { 
-                    document.querySelectorAll('[aria-checked="true"]').forEach(x => x.click()); 
-                }, 1000);
+                document.querySelectorAll('[aria-checked="true"]').forEach(x => x.click());
             }
         }, 100);
+    }
+    
+    function createButton() {
+        var element = document.createElement("button");
+        element.id = "UNPLAYLIST";
+        element.innerHTML = "UNPLAYLIST";
+        element.style.backgroundColor = "transparent";
+        element.style.border = "none";
+        element.onclick = unplaylist;
+        return element;
     }
 
     function go() {
@@ -24,21 +32,13 @@
         var checkExist = setInterval(() => {
             var m = document.querySelector("#menu-container");
             
-            if (m) {
-                if(!document.getElementById("UNPLAYLIST")) {
-                    var element = document.createElement("button");
-                    
-                    element.id = "UNPLAYLIST";
-                    element.innerHTML = "UNPLAYLIST";
-                    element.style.backgroundColor = "transparent";
-                    element.style.border = "none";
-                    element.onclick = unplaylist;
-
-                    //m.querySelector("#top-level-buttons-computed").appendChild(element);
-                    m.querySelector("#menu").childNodes[0].appendChild(element);
-                }
-                
+            if (m) {                
                 clearInterval(checkExist);
+                
+                if(!document.getElementById("UNPLAYLIST")) {
+                    //m.querySelector("#top-level-buttons-computed").appendChild(createButton());
+                    m.querySelector("#menu").childNodes[0].appendChild(createButton());
+                }
             }
         }, 1000);
     }
