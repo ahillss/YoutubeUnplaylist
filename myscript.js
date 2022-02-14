@@ -21,7 +21,9 @@
         
         var b = document.createElement("button");
         b.id = "UNPLAYLIST";
-        b.innerHTML = "UNPLAYLIST";
+        //b.innerHTML = "UNPL";
+        b.innerText = "UNPL";
+        b.title="UNPLAYLIST";
         b.style.backgroundColor = "transparent";
         b.style.border = "none";
         b.onclick = unplaylist;
