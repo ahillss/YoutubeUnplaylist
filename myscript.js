@@ -1,4 +1,4 @@
-(()=>{
+(function(){
     function unplaylist() {
         document.querySelector('[aria-label="Save to playlist"]').click();
 
@@ -15,10 +15,6 @@
     }
     
     function createAttachButton(m) {
-        if(document.getElementById("UNPLAYLIST")) {
-            return;
-        }
-        
         var b = document.createElement("button");
         b.id = "UNPLAYLIST";
         //b.innerHTML = "UNPL";
@@ -27,18 +23,21 @@
         b.style.backgroundColor = "transparent";
         b.style.border = "none";
         b.onclick = unplaylist;
+        b.setAttribute("class", "style-scope ytd-button-renderer style-default size-default");
 
-        //m.querySelector("#top-level-buttons-computed").appendChild(b);
-        m.querySelector("#menu").childNodes[0].appendChild(b);
+        m.appendChild(b);
+        //m.prepend(b);
     }
-
+    
     function go() {
         if(!location.pathname.startsWith('/watch')) {
             return;
         }
         
-        var checkExist = setInterval(() => {
-            var m = document.querySelector("#menu-container");
+        var checkExist = setInterval(function() {
+            var a = document.querySelector("#actions-inner");
+            //var m = a.querySelector("#flexible-item-buttons");
+            var m = a.querySelector("#top-level-buttons-computed");
             
             if (m) {                
                 clearInterval(checkExist);
