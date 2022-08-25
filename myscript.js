@@ -26,7 +26,8 @@
         b.style.backgroundColor = "transparent";
         b.style.border = "none";
         b.onclick = unplaylist;
-        b.innerHTML = '<div style="display: table-row"><svg style="display: table-cell;" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg><div style="display: table-cell;vertical-align: middle">UNPL</div></div>';
+        //b.innerHTML = '<div style="display: table-row"><svg style="display: table-cell;" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg><div style="display: table-cell;vertical-align: middle">UNPL</div></div>';
+        b.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg>';
         m.appendChild(b);
     }
     
@@ -44,7 +45,7 @@
                 clearInterval(checkExist);
                 createAttachButton(m);
             }
-        }, 1000);
+        }, 500);
     }
 
     document.addEventListener('yt-navigate-finish', go);
