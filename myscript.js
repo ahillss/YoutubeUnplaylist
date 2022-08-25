@@ -13,20 +13,17 @@
             }
         }, 100);
     }
-    
+         
     function createAttachButton(m) {
         var b = document.createElement("button");
-        b.id = "UNPLAYLIST";
-        //b.innerHTML = "UNPL";
-        b.innerText = "UNPL";
+        
         b.title="UNPLAYLIST";
         b.style.backgroundColor = "transparent";
         b.style.border = "none";
         b.onclick = unplaylist;
-        b.setAttribute("class", "style-scope ytd-button-renderer style-default size-default");
-
+        b.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg>';
+        //b.appendChild(document.createTextNode("UnPL"));
         m.appendChild(b);
-        //m.prepend(b);
     }
     
     function go() {
@@ -36,8 +33,8 @@
         
         var checkExist = setInterval(function() {
             var a = document.querySelector("#actions-inner");
-            //var m = a.querySelector("#flexible-item-buttons");
             var m = a.querySelector("#top-level-buttons-computed");
+            //var m = document.querySelector("#owner");     
             
             if (m) {                
                 clearInterval(checkExist);
