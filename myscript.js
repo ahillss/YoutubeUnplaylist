@@ -15,8 +15,13 @@
     }
          
     function createAttachButton(m) {
+        if(document.getElementById("UNPLAYLIST")) {
+            return;
+        }
+        
         var b = document.createElement("button");
         
+        b.id = "UNPLAYLIST";
         b.title="UNPLAYLIST";
         b.style.backgroundColor = "transparent";
         b.style.border = "none";
