@@ -15,9 +15,7 @@
     }
          
     function createAttachButton(m) {
-        if(document.getElementById("UNPLAYLIST")) {
-            return;
-        }
+        if(document.getElementById("UNPLAYLIST")) {return;}
         
         var b = document.createElement("button");
         
@@ -26,8 +24,8 @@
         b.style.backgroundColor = "transparent";
         b.style.border = "none";
         b.onclick = unplaylist;
-        //b.innerHTML = '<div style="display: table-row"><svg style="display: table-cell;" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg><div style="display: table-cell;vertical-align: middle">UNPL</div></div>';
         b.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg>';
+        
         m.appendChild(b);
     }
     
@@ -37,15 +35,14 @@
         }
         
         var checkExist = setInterval(function() {
-            //var a = document.querySelector("#actions-inner");
-            //var m = a.querySelector("#top-level-buttons-computed");
-            var m = document.querySelector("#owner");     
+            var m = document.querySelector("div#top-level-buttons-computed"); 
+            m=m && m.parentNode;
             
             if (m) {                
                 clearInterval(checkExist);
                 createAttachButton(m);
             }
-        }, 500);
+        }, 1000);
     }
 
     document.addEventListener('yt-navigate-finish', go);
