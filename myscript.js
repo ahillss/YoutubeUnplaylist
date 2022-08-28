@@ -36,7 +36,7 @@
         }
 
         var checkExist = setInterval(function() {
-            var a = document.querySelector("#info-contents");
+            var a = document.querySelector("div#actions-inner,div#info-contents");
             var m = a && a.querySelector("#top-level-buttons-computed");
             
             if(m) {
