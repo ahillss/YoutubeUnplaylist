@@ -17,24 +17,17 @@
     function createAttachButton(m) {
         if(m.querySelector("#UNPLAYLIST")) {return;}
         
-        var b = document.createElement("button");
+        var b = document.createElement("span");
         
         b.id = "UNPLAYLIST";
         b.title="UNPLAYLIST";
-        b.style.backgroundColor = "transparent";
-        b.style.border = "none";
         b.onclick = unplaylist;
         
-        b.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg>';
-        b.innerText="UNPL";
+        b.innerHTML = '<svg width="24" height="24" viewBox="0 -12 24 36" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg>';
         
-        m.appendChild(b);
+        //b.innerText="UNPL";
         
-        //
-        //let tmp=document.createTextNode("Unsave");
-        //m.childNodes[0].appendChild(tmp);
-        //setTimeout(function(){m.removeChild(m.childNodes[0]);}, 5000);
-
+        m.append(b);
     }
     
     function go() {
