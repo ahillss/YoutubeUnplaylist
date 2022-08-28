@@ -34,10 +34,10 @@
         if(!location.pathname.startsWith('/watch')) {
             return;
         }
-        
+
         var checkExist = setInterval(function() {
-            var a = document.querySelector("#actions-inner");
-            var m = a.querySelector("#top-level-buttons-computed");
+            var a = document.querySelector("#info-contents");
+            var m = a && a.querySelector("#top-level-buttons-computed");
             
             if(m) {
                 clearInterval(checkExist);
