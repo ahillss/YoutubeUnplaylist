@@ -15,7 +15,7 @@
     }
          
     function createAttachButton(m) {
-        if(document.getElementById("UNPLAYLIST")) {return;}
+        if(m.querySelector("#UNPLAYLIST")) {return;}
         
         var b = document.createElement("button");
         
@@ -29,23 +29,33 @@
         //b.innerText="UNPL";
         
         m.appendChild(b);
-        //m.prepend(b);
+        
+        //
+        let tmp=document.createTextNode("Unsave");
+        b.appendChild(tmp);
+        setTimeout(function(){b.removeChild(tmp);}, 2000);
+
     }
     
     function go() {
         if(!location.pathname.startsWith('/watch')) {
-            //return;
+            return;
         }
         
         var checkExist = setInterval(function() {
-            var m = document.querySelector("div#top-level-buttons-computed"); 
-            m=m && m.parentNode;
+            //more than one for some reason ...
+            var ms = document.querySelectorAll("div#top-level-buttons-computed");
             
-            if (m) {                
-                clearInterval(checkExist);
-                createAttachButton(m);
+            if (ms.length>0) {
+                for(var i=0;i<ms.length;i++) {
+                    var m=ms[i];
+                    m=m && m.parentNode;
+                    
+                    clearInterval(checkExist);
+                    createAttachButton(m);
+                }
             }
-        }, 5000);
+        }, 1000);
     }
 
     document.addEventListener('yt-navigate-finish', go);
