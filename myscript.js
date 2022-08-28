@@ -22,8 +22,8 @@
         b.id = "UNPLAYLIST";
         b.title="UNPLAYLIST";
         b.onclick = unplaylist;
-        
-        b.innerHTML = '<svg width="24" height="24" viewBox="0 -12 24 36" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg>';
+                
+        b.innerHTML = '<svg width="24" height="24" viewBox="0 -6 24 24" preserveAspectRatio="xMidYMin slice"><path d="m22 13h-10v-2h10v2zm-8-6h-12v1h12v-1zm-12 5h8v-1h-8v1zm0 4h8v-1h-8v1z"></path></svg>';
         
         //b.innerText="UNPL";
         
