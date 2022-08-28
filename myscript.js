@@ -26,14 +26,14 @@
         b.onclick = unplaylist;
         
         b.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid slice"><path d="M22 13h-10v-2h10V13zM14 7H2v1h12V7zM2 12h8v-1H2V12zM2 16h8v-1H2V16z"></path></svg>';
-        //b.innerText="UNPL";
+        b.innerText="UNPL";
         
         m.appendChild(b);
         
         //
-        let tmp=document.createTextNode("Unsave");
-        b.appendChild(tmp);
-        setTimeout(function(){b.removeChild(tmp);}, 2000);
+        //let tmp=document.createTextNode("Unsave");
+        //m.childNodes[0].appendChild(tmp);
+        //setTimeout(function(){m.removeChild(m.childNodes[0]);}, 5000);
 
     }
     
@@ -43,18 +43,14 @@
         }
         
         var checkExist = setInterval(function() {
-            //more than one for some reason ...
-            var ms = document.querySelectorAll("div#top-level-buttons-computed");
+            var a = document.querySelector("#actions-inner");
+            var m = a.querySelector("#top-level-buttons-computed");
             
-            if (ms.length>0) {
-                for(var i=0;i<ms.length;i++) {
-                    var m=ms[i];
-                    m=m && m.parentNode;
-                    
-                    clearInterval(checkExist);
-                    createAttachButton(m);
-                }
+            if(m) {
+                clearInterval(checkExist);
+                createAttachButton(m.parentNode);
             }
+            
         }, 1000);
     }
 
