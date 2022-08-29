@@ -21,11 +21,9 @@
         
         b.id = "UNPLAYLIST";
         b.title="UNPLAYLIST";
+        b.style.margin = 'auto';
         b.onclick = unplaylist;
-                
-        b.innerHTML = '<svg width="24" height="24" viewBox="0 -6 24 24" preserveAspectRatio="xMidYMin slice"><path d="m22 13h-10v-2h10v2zm-8-6h-12v1h12v-1zm-12 5h8v-1h-8v1zm0 4h8v-1h-8v1z"></path></svg>';
-        
-        //b.innerText="UNPL";
+        b.innerHTML = '<svg width="24" height="24" preserveAspectRatio="xMidYMid slice"><path d="m22 13h-10v-2h10v2zm-8-6h-12v1h12v-1zm-12 5h8v-1h-8v1zm0 4h8v-1h-8v1z"></path></svg>';
         
         m.append(b);
     }
@@ -37,7 +35,7 @@
 
         var checkExist = setInterval(function() {
             var a = document.querySelector("div#actions-inner,div#info-contents");
-            var m = a && a.querySelector("#top-level-buttons-computed");
+            var m = a?a.querySelector("#top-level-buttons-computed"):null;
             
             if(m) {
                 clearInterval(checkExist);
