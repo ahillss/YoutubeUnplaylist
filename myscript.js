@@ -23,9 +23,14 @@
         b.title="UNPLAYLIST";
         b.style.margin = 'auto';
         b.onclick = unplaylist;
-        b.innerHTML = '<svg width="24" height="24" preserveAspectRatio="xMidYMid slice"><path d="m22 13h-10v-2h10v2zm-8-6h-12v1h12v-1zm-12 5h8v-1h-8v1zm0 4h8v-1h-8v1z"></path></svg>';
         
+        b.innerHTML = '<svg width="24" height="24" preserveAspectRatio="xMidYMid slice"><path d="m22 13h-10v-2h10v2zm-8-6h-12v1h12v-1zm-12 5h8v-1h-8v1zm0 4h8v-1h-8v1z"></path></svg>';
+                
         m.append(b);
+
+        let s=m.style.display;
+        m.style.display ='none';
+        setTimeout(function(){m.style.display=s;}, 200);
     }
     
     function go() {
