@@ -15,7 +15,9 @@
     }
          
     function createAttachButton(m) {
-        if(m.querySelector('#UNPLAYLIST')) {return;}
+        if(m.querySelector('#UNPLAYLIST')) {
+            return;
+        }
         
         var b = document.createElement('span');
         var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -25,7 +27,7 @@
         
         b.setAttribute('id','UNPLAYLIST');
         b.setAttribute('title','UNPLAYLIST');
-        b.setAttribute('style','margin:auto');
+        b.setAttribute('style','margin-top:auto;margin-bottom:auto');
         
         svg.setAttributeNS(null,'width','24');
         svg.setAttributeNS(null,'height','24');
@@ -36,8 +38,10 @@
         svg.append(path);
         b.append(svg);
         m.append(b);
-
-        //let tmp=m.style.display; m.style.display ='none'; setTimeout(function(){m.style.display=tmp;}, 200);
+        
+        let tmp=m.style.display;
+        m.style.display='none';
+        setTimeout(function(){m.style.display=tmp;},200);
     }
     
     function go() {
