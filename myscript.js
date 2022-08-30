@@ -4,7 +4,7 @@
 
         var checkExist = setInterval(() => {
             var btn = document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
-            var iron = document.querySelector("tp-yt-iron-overlay-backdrop");
+            var iron = document.querySelector('tp-yt-iron-overlay-backdrop');
             
             if (btn && iron) {
                 clearInterval(checkExist);
@@ -15,22 +15,29 @@
     }
          
     function createAttachButton(m) {
-        if(m.querySelector("#UNPLAYLIST")) {return;}
+        if(m.querySelector('#UNPLAYLIST')) {return;}
         
-        var b = document.createElement("span");
+        var b = document.createElement('span');
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        var path = document.createElementNS('http://www.w3.org/2000/svg','path');
         
-        b.id = "UNPLAYLIST";
-        b.title="UNPLAYLIST";
-        b.style.margin = 'auto';
         b.onclick = unplaylist;
         
-        b.innerHTML = '<svg width="24" height="24" preserveAspectRatio="xMidYMid slice"><path d="m22 13h-10v-2h10v2zm-8-6h-12v1h12v-1zm-12 5h8v-1h-8v1zm0 4h8v-1h-8v1z"></path></svg>';
-                
+        b.setAttribute('id','UNPLAYLIST');
+        b.setAttribute('title','UNPLAYLIST');
+        b.setAttribute('style','margin:auto');
+        
+        svg.setAttributeNS(null,'width','24');
+        svg.setAttributeNS(null,'height','24');
+        svg.setAttributeNS(null,'preserveAspectRatio','xMidYMid slice');
+        
+        path.setAttributeNS(null,'d','m22 13h-10v-2h10v2zm-8-6h-12v1h12v-1zm-12 5h8v-1h-8v1zm0 4h8v-1h-8v1z');
+        
+        svg.append(path);
+        b.append(svg);
         m.append(b);
 
-        let s=m.style.display;
-        m.style.display ='none';
-        setTimeout(function(){m.style.display=s;}, 200);
+        //let tmp=m.style.display; m.style.display ='none'; setTimeout(function(){m.style.display=tmp;}, 200);
     }
     
     function go() {
@@ -39,8 +46,8 @@
         }
 
         var checkExist = setInterval(function() {
-            var a = document.querySelector("div#actions-inner,div#info-contents");
-            var m = a?a.querySelector("#top-level-buttons-computed"):null;
+            var a = document.querySelector('div#actions-inner,div#info-contents');
+            var m = a?a.querySelector('#top-level-buttons-computed'):null;
             
             if(m) {
                 clearInterval(checkExist);
