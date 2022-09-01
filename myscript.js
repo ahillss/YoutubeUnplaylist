@@ -19,15 +19,16 @@
             return;
         }
         
-        var b = document.createElement('span');
         var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         var path = document.createElementNS('http://www.w3.org/2000/svg','path');
         
-        b.onclick = unplaylist;
+        svg.onclick = unplaylist;
         
-        b.setAttribute('id','UNPLAYLIST');
-        b.setAttribute('title','UNPLAYLIST');
-        b.setAttribute('style','margin-top:auto;margin-bottom:auto');
+        svg.setAttribute('id','UNPLAYLIST');
+        svg.setAttribute('title','UNPLAYLIST');
+        
+        svg.setAttribute('style','margin-top:auto;margin-bottom:auto');
+        //svg.setAttribute('style','margin:auto');
         
         svg.setAttributeNS(null,'width','24');
         svg.setAttributeNS(null,'height','24');
@@ -36,12 +37,7 @@
         path.setAttributeNS(null,'d','m22 13h-10v-2h10v2zm-8-6h-12v1h12v-1zm-12 5h8v-1h-8v1zm0 4h8v-1h-8v1z');
         
         svg.append(path);
-        b.append(svg);
-        m.append(b);
-        
-        let tmp=m.style.display;
-        m.style.display='none';
-        setTimeout(function(){m.style.display=tmp;},200);
+        m.append(svg);
     }
     
     function go() {
@@ -57,7 +53,6 @@
                 clearInterval(checkExist);
                 createAttachButton(m.parentNode);
             }
-            
         }, 1000);
     }
 
