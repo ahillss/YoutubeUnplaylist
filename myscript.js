@@ -60,8 +60,7 @@
         
         //
         button.onpointerdown = function() {
-            //path.style.fill="#d3d3d3";
-            path.style.fill="#a9a9a9";
+            path.style.fill="#c3c3c3";
         }
                 
         button.onpointerup = function() {
@@ -88,19 +87,24 @@
                 
                 // yqnn.github.io/svg-path-editor
                 
+                var w=6;
+                var x=0;//-w*0.5;
+                var h=6;
+                var y=-h*0.5;
+                
                 createAttachButton(element,"Like",like,
                     "m2 10 3-10 3 10-8-6h10Z",
-                    0,0,10,10
+                    x,0,10+w,10
                 );
                 
                 createAttachButton(element,"Unplaylist",unplaylist,
                     "M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8Z",
-                    -3,-3,20+6,10+6
+                    x,y,20+w,10+h
                 );
                 
                 createAttachButton(element,"Playlist",playlist,
                     "M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8ZM14 0h2v10h-2Z",
-                    -3,-3,20+6,10+6
+                    x,y,20+w,10+h
                 );
                 
             }
