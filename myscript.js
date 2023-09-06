@@ -1,13 +1,4 @@
 (function(){
-    //https://yqnn.github.io/svg-path-editor/
-    
-    //var like_path="m79,392 127-392 127,392-333-242h412";
-    //var unplaylist_path="M12 12h10v3h-10ZM2 7h11v2h-11ZM2 12h8v2h-8ZM2 17h8v2h-8Z";
-    //var unplaylist_like_path="m22 12h-10v3h10zm-8-5h-12v2h12zm-12 5h8v2h-8zm0 5h8v2h-8z";
-    
-    var like_path="M3.95 23l6.35-19.6 6.35 19.6-16.65-12.1h20.6Z";
-    var unplaylist_path="M14 12h13v3h-13ZM2 7h13v2h-13ZM2 12h10v2h-10ZM2 17h10v2h-10Z";
-    var playlist_path="M14 12h13v3h-13ZM19 7h3v5h-3ZM19 15h3v5h-3ZM2 7h13v2h-13ZM2 12h10v2h-10ZM2 17h10v2h-10Z";
     
     function unplaylist() {
         document.querySelector('[aria-label="Save to playlist"]').click();
@@ -25,20 +16,15 @@
     }
     
     function like() {
-        var b = document.querySelector('.animated-like-toggle-button button') || document.querySelector('#segmented-like-button button');
-        
-        if (b.getAttribute('aria-pressed') == 'false') {
-            b.click();
-        }
+        var b = document.querySelector('.animated-like-toggle-button button') || document.querySelector('#segmented-like-button button');        
+        if (b.getAttribute('aria-pressed') == 'false') { b.click(); }
     }
-    
-    //function unplaylist_like() { unplaylist();  like(); }
     
     function playlist() {
-        document.querySelector('[aria-label="Save to playlist"]').click(); unplaylist_like_path
+        document.querySelector('[aria-label="Save to playlist"]').click();
     }
     
-    function createAttachButton(element,name,onclick,icon) {
+    function createAttachButton(element,name,onclick,icon,icon_x,icon_y,icon_w,icon_h) {
         if(document.querySelector('#MY_'+name)) {
             return;
         }
@@ -56,22 +42,37 @@
         //
         button.classList.add('playerButton');
         button.classList.add('ytp-button');        
-        button.onclick = onclick;
         button.setAttribute('id',"MY_"+name);
         button.setAttribute('title',name);
+        button.style.width = "auto";
+        button.style.height = "100%";
         
-        //
+        svg.style.width = "auto";
+        svg.style.height = "45%";        
         svg.classList.add('playerButtonImage');
-        svg.setAttributeNS(null,'preserveAspectRatio','xMidYMid slice');
+        svg.setAttributeNS(null,'preserveAspectRatio','xMidYMid slice'); //xMinYMin meet
+        svg.setAttribute('viewBox', icon_x+' '+icon_y+ ' '+icon_w+ ' '+ icon_h);
+        svg.style.border="1px solid transparent";
+        //svg.style.border="1px solid white";
         
-        //
-        //svg.setAttributeNS(null,'width','24');
-        //svg.setAttributeNS(null,'height','24');
-        //svg.setAttribute('style', ' width: 100%; height: auto;');
-        
-        //
         path.setAttributeNS(null,'d',icon);
-        path.setAttribute('style', 'fill: white;stroke:white;stroke-opacity=1');
+        path.style.fill="white";
+        
+        //
+        button.onpointerdown = function() {
+            //path.style.fill="#d3d3d3";
+            path.style.fill="#a9a9a9";
+        }
+                
+        button.onpointerup = function() {
+            path.style.fill="white";
+        }
+        
+        button.onclick = function() {
+            onclick();
+            svg.style.border="1px solid white";
+            setTimeout(function(){ svg.style.border="1px solid transparent"; }, 100);
+        };
     }
     
     function go() {
@@ -84,10 +85,24 @@
             
             if(element) {
                 clearInterval(checkExist);
-                createAttachButton(element,"LIKE",like,like_path);
-                //createAttachButton(element,"UNPLAYLIST_LIKE",unplaylist_like,unplaylist_like_path);
-                createAttachButton(element,"UNPLAYLIST",unplaylist,unplaylist_path);
-                createAttachButton(element,"PLAYLIST",playlist,playlist_path);
+                
+                // yqnn.github.io/svg-path-editor
+                
+                createAttachButton(element,"Like",like,
+                    "m2 10 3-10 3 10-8-6h10Z",
+                    0,0,10,10
+                );
+                
+                createAttachButton(element,"Unplaylist",unplaylist,
+                    "M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8Z",
+                    -3,-3,20+6,10+6
+                );
+                
+                createAttachButton(element,"Playlist",playlist,
+                    "M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8ZM14 0h2v10h-2Z",
+                    -3,-3,20+6,10+6
+                );
+                
             }
         }, 1000);
     }
