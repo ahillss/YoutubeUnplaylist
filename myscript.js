@@ -8,9 +8,17 @@
             var iron = document.querySelector('tp-yt-iron-overlay-backdrop');
             
             if (btn && iron) {
+                function abc() {
+                    document.querySelectorAll('[aria-checked="true"]').forEach(x => x.click());
+                    btn.click();
+                }
+                
                 clearInterval(checkExist);
-                btn.click();
-                document.querySelectorAll('[aria-checked="true"]').forEach(x => x.click());
+                
+                abc();
+                
+				setTimeout(abc,1000);
+				setTimeout(abc,2000);
             }
         }, 100);
     }
@@ -52,8 +60,6 @@
         svg.classList.add('playerButtonImage');
         svg.setAttributeNS(null,'preserveAspectRatio','xMidYMid slice'); //xMinYMin meet
         svg.setAttribute('viewBox', icon_x+' '+icon_y+ ' '+icon_w+ ' '+ icon_h);
-        svg.style.border="1px solid transparent";
-        //svg.style.border="1px solid white";
         
         path.setAttributeNS(null,'d',icon);
         path.style.fill="white";
@@ -69,8 +75,8 @@
         
         button.onclick = function() {
             onclick();
-            svg.style.border="1px solid white";
-            setTimeout(function(){ svg.style.border="1px solid transparent"; }, 100);
+            path.style.stroke="white";
+            setTimeout(function(){ path.style.stroke="transparent"; }, 100);
         };
     }
     
@@ -88,7 +94,7 @@
                 // yqnn.github.io/svg-path-editor
                 
                 var w=6;
-                var x=0;//-w*0.5;
+                var x=-w*0.5;
                 var h=6;
                 var y=-h*0.5;
                 
