@@ -55,11 +55,16 @@
         button.style.width = "auto";
         button.style.height = "100%";
         
+		//button.height = 24;
+		//svg.height = 24;
+		
         svg.style.width = "auto";
-        svg.style.height = "45%";        
+        svg.style.height = "100%";//48//"50%"; //"45%";  
+
         svg.classList.add('playerButtonImage');
         svg.setAttributeNS(null,'preserveAspectRatio','xMidYMid slice'); //xMinYMin meet
         svg.setAttribute('viewBox', icon_x+' '+icon_y+ ' '+icon_w+ ' '+ icon_h);
+        //svg.setAttribute('viewBox', '0 -6 24 24');
         
         path.setAttributeNS(null,'d',icon);
         path.style.fill="white";
@@ -78,6 +83,8 @@
             path.style.stroke="white";
             setTimeout(function(){ path.style.stroke="transparent"; }, 100);
         };
+
+		button.classList.add('ytp-button');
     }
     
     function go() {
@@ -93,24 +100,19 @@
                 
                 // yqnn.github.io/svg-path-editor
                 
-                var w=6;
-                var x=-w*0.5;
-                var h=6;
-                var y=-h*0.5;
-                
-                createAttachButton(element,"Like",like,
+                createAttachButton(element,"Like",function(){like();unplaylist();},
                     "m2 10 3-10 3 10-8-6h10Z",
-                    x,0,10+w,10
+                    -4,-5,18,20
                 );
                 
                 createAttachButton(element,"Unplaylist",unplaylist,
                     "M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8Z",
-                    x,y,20+w,10+h
+                    -5,-10,30,30
                 );
                 
                 createAttachButton(element,"Playlist",playlist,
                     "M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8ZM14 0h2v10h-2Z",
-                    x,y,20+w,10+h
+                    -5,-10,30,30
                 );
                 
             }
