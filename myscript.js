@@ -24,8 +24,10 @@
     }
     
     function like() {
-        var b = document.querySelector('.animated-like-toggle-button button') || document.querySelector('#segmented-like-button button');        
-        if (b.getAttribute('aria-pressed') == 'false') { b.click(); }
+        var b = document.querySelector('.animated-like-toggle-button button') 
+			|| document.querySelector('#segmented-like-button button')
+			|| document.querySelector('[title="I like this"]');        
+        if (b && b.getAttribute('aria-pressed') == 'false') { b.click(); }
     }
     
     function playlist() {
@@ -54,17 +56,13 @@
         button.setAttribute('title',name);
         button.style.width = "auto";
         button.style.height = "100%";
-        
-		//button.height = 24;
-		//svg.height = 24;
-		
+        		
         svg.style.width = "auto";
-        svg.style.height = "100%";//48//"50%"; //"45%";  
+        svg.style.height = "100%";
 
         svg.classList.add('playerButtonImage');
         svg.setAttributeNS(null,'preserveAspectRatio','xMidYMid slice'); //xMinYMin meet
         svg.setAttribute('viewBox', icon_x+' '+icon_y+ ' '+icon_w+ ' '+ icon_h);
-        //svg.setAttribute('viewBox', '0 -6 24 24');
         
         path.setAttributeNS(null,'d',icon);
         path.style.fill="white";
