@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "version": "2.0",
+  "version": "1.0",
   "name": "Youtube Unplaylist",
-  "description": "Adds a button on the playbar of Youtube videos to remove them from all playlists",
+  "description": "Adds button to a Youtube video's playbar, that will remove it from all playlists",
   "host_permissions": [ "*://*.youtube.com/*" ],
   "content_scripts": [{
     "matches": [ "*://*.youtube.com/*" ],
