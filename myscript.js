@@ -35,71 +35,87 @@ function get_more_actions() {
 	return element;
 }
 
-function click_playlist() {
+function try_click_playlist() {
 	var playlist_element=get_playlist();
 	
-	if (!playlist_element) {
-		var more_actions_element=get_more_actions();
-		
-		if(more_actions_element) {
-			more_actions_element.click();
-			
-			//
+	if (playlist_element) {
+		playlist_element.click();
+		return true;
+	}
+	
+	return false;
+}
+
+function run_timer(func) {
+	if(func()) {
+		return;
+	}
+	
+	setTimeout(function(){
+		if(!func()) {
 			var checkExist = setInterval(() => {
-				var playlist_element=get_playlist();
-				
-				if (playlist_element) {
-					function abc() {
-						playlist_element.click();
-					}
-					
-					clearInterval(checkExist);
-					
-					abc();
-					//setTimeout(abc,1000);
-					//setTimeout(abc,2000);
-				}
+				if(func()) { clearInterval(checkExist); }
 			}, 500);
 			
-			setTimeout(function(){clearInterval(checkExist);},10000);
-			//
-			// var abc = function() {
-				// var playlist_element=get_playlist();
-				
-				// if (playlist_element) {
-					// playlist_element.click();
-				// }
-			// };
-			
-			// setTimeout(abc,500);
+			setTimeout(function(){clearInterval(checkExist);},10000); //give up
 		}
-	} else {
-		playlist_element.click();
+	},200);
+}
+
+function click_playlist() {
+	if(try_click_playlist()) {
+		return;
 	}
+	
+	//
+	var more_actions_element=get_more_actions();
+	
+	if(!more_actions_element) {
+		return;
+	}
+	
+	//
+	more_actions_element.click();
+	
+	//
+	run_timer(try_click_playlist);
+}
+
+function try_close_playlist() {
+	var iron = document.querySelector('tp-yt-iron-overlay-backdrop');
+	
+	if(iron) { //checks if popup visible, as button can be clicked before then and therefore do nothing
+		let header=document.querySelector('div.ytd-add-to-playlist-renderer#header');
+		
+		if(header) {
+			var btn = header.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
+			
+			if(btn) {
+				btn.click();
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+function try_uncheck_playlists() {
+	var playlists=document.querySelector('div.ytd-add-to-playlist-renderer#playlists');
+	
+	if(playlists) {
+		playlists.querySelectorAll('[aria-checked="true"]').forEach(x => x.click());
+		return true;
+	}
+	
+	return false;
 }
 
 function unplaylist() {
 	click_playlist();
-
-	var checkExist = setInterval(() => {
-		var btn = document.querySelector('.ytd-add-to-playlist-renderer [aria-label="Cancel"]');
-		var iron = document.querySelector('tp-yt-iron-overlay-backdrop');
-		
-		if (btn && iron) {
-			function abc() {
-				document.querySelectorAll('[aria-checked="true"]').forEach(x => x.click());
-				btn.click();
-			}
-			
-			clearInterval(checkExist);
-			
-			abc();
-			//setTimeout(abc,1000);
-			setTimeout(abc,2000);
-		}
-	}, 500);
 	
-	setTimeout(function(){clearInterval(checkExist);},10000);
+	run_timer(try_close_playlist);
+	run_timer(try_uncheck_playlists);
 }
 
 function like() {
@@ -169,7 +185,7 @@ function go() {
 	var element=document.querySelector(".ytp-right-controls");
 	
 	if(element) {
-	//        clearInterval(checkExist);
+		// clearInterval(checkExist);
 			
 		// yqnn.github.io/svg-path-editor
 		
