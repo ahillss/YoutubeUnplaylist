@@ -125,10 +125,22 @@ function unplaylist() {
 }
 
 function like() {
+	//old
     var b = document.querySelector('.animated-like-toggle-button button') 
         || document.querySelector('#segmented-like-button button')
-        || document.querySelector('[title="I like this"]');        
-    if (b && b.getAttribute('aria-pressed') == 'false') { b.click(); }
+        || document.querySelector('[title="I like this"]')
+		;
+	
+	//new
+	if(!b) {
+		b = document.querySelector('like-button-view-model');
+		b = b && b.querySelector('button');
+	}
+	
+	//
+    if (b && b.getAttribute('aria-pressed') == 'false') { 
+		b.click(); 
+	}
 }
     
 function createAttachButton(element,name,onclick,icon,icon_x,icon_y,icon_w,icon_h) {
