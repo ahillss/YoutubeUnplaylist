@@ -1,4 +1,5 @@
 //(function(){
+var button;
 
 function get_playlist() {
     var element=document.querySelector('[aria-label="Save to playlist"]');
@@ -82,8 +83,12 @@ function click_playlist() {
 }
 
 function try_close_playlist() {
-    var iron = document.querySelector('tp-yt-iron-overlay-backdrop');
-    
+	return try_close_playlist_old() || try_close_playlist_new();
+}
+
+function try_close_playlist_old() {
+    var iron = document.querySelector('tp-yt-iron-overlay-backdrop'); //tp-yt-paper-dialog
+
     if(iron) { //checks if popup visible, as button can be clicked before then and therefore do nothing
         let header=document.querySelector('div.ytd-add-to-playlist-renderer#header');
         
@@ -98,6 +103,42 @@ function try_close_playlist() {
     }
 
     return false;
+}
+
+function isHidden(elem) {
+  const styles = window.getComputedStyle(elem);
+  return styles.display === 'none' || styles.visibility === 'hidden' || styles.opacity === '0';
+}
+
+function try_close_playlist_new() {
+    var irons = document.querySelectorAll('tp-yt-iron-dropdown');
+	
+	for (var i=0;i<irons.length;i++) {
+		var iron=irons[i];
+		var header=iron.querySelector('yt-panel-header-view-model[aria-label="Save video to..."]');
+		
+		if(header) {
+			//iron.style.display = "none";
+			//iron.setAttribute('aria-hidden', 'true');
+			//iron.blur();
+			
+			run_timer((function(iron){ //necessary for closure?
+				return function() {
+					if(!isHidden(iron)) {
+						document.body.click();
+						return true;
+					} else {
+						return false;
+					}
+				}
+			})(iron));
+
+			//
+			return true;
+		}
+	}
+ 
+	return false;	
 }
 
 function try_uncheck_playlists() {
@@ -142,9 +183,11 @@ function like() {
 		b.click(); 
 	}
 }
-    
-function createAttachButton(element,name,onclick,icon,icon_x,icon_y,icon_w,icon_h) {
-    if(document.querySelector('#MY_'+name)) {
+
+function createAttachButton(element,name,onclick,icon,icon_x,icon_y,icon_w,icon_h,w,h) {
+	let id='YT_UNPLAYLIST_'+name.toUpperCase();
+	
+    if(document.querySelector('#'+id)) {
         return;
     }
     
@@ -159,20 +202,43 @@ function createAttachButton(element,name,onclick,icon,icon_x,icon_y,icon_w,icon_
     element.prepend(button);
     
     //
-    button.classList.add('playerButton');
-    button.classList.add('ytp-button');        
-    button.setAttribute('id',"MY_"+name);
+    svg.classList.add('playerButton');
+    button.classList.add('ytp-button');
+    button.classList.add('ytp-efyt-button');
+    button.setAttribute('id',id);
     button.setAttribute('title',name);
-    button.style.width = "auto";
-    button.style.height = "100%";
+	
+	button.style.display="flex";
+	button.style.alignItems="center"; //vert
+	button.style.justifyContent ="center";//hori
+	
+	//svg.style.display="flex";
+	//svg.style.alignItems="center"; //vert
+	//svg.style.justifyContent ="center"; //hori
+	
+    //button.style.width = "auto";
+    ////button.style.width = "100%";
+    ////button.style.height = "auto";
+    //button.style.height = "100%";
             
-    svg.style.width = "auto";
-    svg.style.height = "100%";
-
+    //svg.style.width = "auto";
+    //svg.style.width = "100%";
+    //svg.style.height = "auto";
+    //svg.style.height = "100%";
+	//svg.style.objectFit = 'contain';
+	//svg.style.objectFit = 'cover';
+	
+	//svg.style.width = icon_w;
+	//svg.style.height = icon_h;
+	
     svg.classList.add('playerButtonImage');
-    svg.setAttributeNS(null,'preserveAspectRatio','xMidYMid slice'); //xMinYMin meet
+    svg.setAttributeNS(null,'preserveAspectRatio','xMidYMid meet'); //xMinYMin meet   //xMidYMid slice
     svg.setAttribute('viewBox', icon_x+' '+icon_y+ ' '+icon_w+ ' '+ icon_h);
-    
+    //svg.setAttribute('viewBox', 0+' '+0+ ' '+30+ ' '+ 30);
+	svg.fill="none"
+	svg.style.width = w;
+	svg.style.height = h;
+	
     path.setAttributeNS(null,'d',icon);
     path.style.fill="white";
     
@@ -194,35 +260,58 @@ function createAttachButton(element,name,onclick,icon,icon_x,icon_y,icon_w,icon_
     button.classList.add('ytp-button');
 }
 
+function create_attach_bar() {
+	var element=document.querySelector(".ytp-right-controls");
+	
+	if(!element) {
+		return false;
+	}
+	
+	// yqnn.github.io/svg-path-editor
+	let size1=26;
+	let size2=32;
+	
+	createAttachButton(element,"Like",function(){like();unplaylist();},
+		//"m2 10 3-10 3 10-8-6h10Z",
+		//"m 2 10 l 3 -10 l 3 10 l -8 -6 h 10 Z",
+		"M 2 10 L 5 0 L 8 10 L 0 4 H 10 Z",
+		//-4,-5,18,20,
+		//-5,-5,5,5,
+		0,0,10,10,
+		size1,size1
+	);
+	
+	createAttachButton(element,"Unplaylist",unplaylist,
+		//"M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8Z",
+		//"M 5 4 h 10 v 2 h -10 Z M 0 0 h 12 v 1 h -12 Z M 5 4 h 8 v 1 h -8 Z M 0 8 h 8 v 1 h -8 Z",
+		"M 10 4 H 20 V 6 H 10 Z M 0 0 H 12 V 1 H 0 Z M 0 4 H 8 V 5 H 0 Z M 0 8 H 8 V 9 H 0 Z",
+		//"M 10 7 H 20 V 9 H 10 Z M 0 3 H 12 V 4 H 0 Z M 0 7 H 8 V 8 H 0 Z M 0 11 H 8 V 12 H 0 Z",
+		//-5,-10,30,30,
+		0,0,20,10,
+		//0,0,25,15,
+		size2,size2
+	);
+	
+	createAttachButton(element,"Playlist",click_playlist,
+		//"M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8ZM14 0h2v10h-2Z",
+		"M 10 4 H 20 V 6 H 10 Z M 0 0 H 12 V 1 H 0 Z M 0 4 H 8 V 5 H 0 Z M 0 8 H 8 V 9 H 0 Z M 14 0 H 16 V 10 H 14 Z",
+		//"M 10 7 H 20 V 9 H 10 Z M 0 3 H 12 V 4 H 0 Z M 0 7 H 8 V 8 H 0 Z M 0 11 H 8 V 12 H 0 Z M 14 3 H 16 V 13 H 14 Z",
+		
+		//-5,-10,30,30,
+		0,0,20,10,
+		//0,0,25,15,
+		size2,size2
+	);
+	
+	return true;
+}
+
 function go() {
     if(!location.pathname.startsWith('/watch')) {
         return;
     }
 
-    //var checkExist = setInterval(function() {
-    var element=document.querySelector(".ytp-right-controls");
-    
-    if(element) {
-        // clearInterval(checkExist);
-            
-        // yqnn.github.io/svg-path-editor
-        
-        createAttachButton(element,"Like",function(){like();unplaylist();},
-            "m2 10 3-10 3 10-8-6h10Z",
-            -4,-5,18,20
-        );
-        
-        createAttachButton(element,"Unplaylist",unplaylist,
-            "M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8Z",
-            -5,-10,30,30
-        );
-        
-        createAttachButton(element,"Playlist",click_playlist,
-            "M10 4h10v2h-10ZM0 0h12v1h-12ZM0 4h8v1h-8ZM0 8h8v1h-8ZM14 0h2v10h-2Z",
-            -5,-10,30,30
-        );
-    }
-    //}, 1000);
+	run_timer(create_attach_bar);
 }
 
 document.addEventListener('yt-navigate-finish', go);
