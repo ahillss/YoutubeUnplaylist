@@ -64,22 +64,14 @@ function run_timer(func) {
 }
 
 function click_playlist() {
-    if(try_click_playlist()) {
-        return;
-    }
-    
-    //
     var more_actions_element=get_more_actions();
-    
-    if(!more_actions_element) {
-        return;
-    }
-    
-    //
-    more_actions_element.click();
-    
-    //
-    run_timer(try_click_playlist);
+        
+    if(!more_actions_element && try_click_playlist()) { 
+		return; 
+	} else {
+		more_actions_element.click();
+		run_timer(try_click_playlist);
+	}
 }
 
 function try_close_playlist() {
@@ -141,21 +133,66 @@ function try_close_playlist_new() {
 	return false;	
 }
 
-function try_uncheck_playlists() {
-    var playlists=document.querySelector('div.ytd-add-to-playlist-renderer#playlists');
-    
-    if(playlists) {
-        function unchecks(){playlists.querySelectorAll('[aria-checked="true"]').forEach(x=>x.click());}
-        
-        unchecks();
-        setTimeout(unchecks,500);
-        setTimeout(unchecks,1000);
-        setTimeout(unchecks,2000);
 
-        return true;
-    }
+function try_uncheck_playlists() {
+	return try_uncheck_playlists_old() || try_uncheck_playlists_new();
+}
+
+function try_uncheck_playlists_new() {
+	//buggy, doesn't close more actions, and if watching videos in playlist, might unplaylist from prev video
+	
+	//|| document.querySelector('ytd-playlist-panel-renderer#playlist')
+	//document.querySelector('ytd-playlist-panel-renderer#playlist').querySelectorAll('path[d="M19 2H5a2 2 0 00-2 2v16.887c0 1.266 1.382 2.048 2.469 1.399L12 18.366l6.531 3.919c1.087.652 2.469-.131 2.469-1.397V4a2 2 0 00-2-2ZM5 20.233V4h14v16.233l-6.485-3.89-.515-.309-.515.309L5 20.233Z"]')
+	
+	//document.querySelectorAll('tp-yt-iron-dropdown')
+	//div.ytContextualSheetLayoutContentContainer
+    //yt-list-view-model
+	
+	var elements=Array.from(document.querySelectorAll('tp-yt-iron-dropdown')).filter((x)=>x.querySelector('div.ytContextualSheetLayoutContentContainer'));
+	
+	if (elements.length==0) {
+		return false;
+	}
+	
+	//
+	function unchecks(){
+		elements[0].querySelectorAll('path[d="M19 2H5a2 2 0 00-2 2v16.887c0 1.266 1.382 2.048 2.469 1.399L12 18.366l6.531 3.919c1.087.652 2.469-.131 2.469-1.397V4a2 2 0 00-2-2Z"]').forEach(function(x){
+			var p0=x.parentElement;
+			var p1=p0 && p0.parentElement;
+			p1.click();
+		});
+		
+		//elements[0].querySelectorAll('path[d="M19 2H5a2 2 0 00-2 2v16.887c0 1.266 1.382 2.048 2.469 1.399L12 18.366l6.531 3.919c1.087.652 2.469-.131 2.469-1.397V4a2 2 0 00-2-2ZM5 20.233V4h14v16.233l-6.485-3.89-.515-.309-.515.309L5 20.233Z"]').forEach(x=>x.click());
+	}
+	
+	unchecks();
+	setTimeout(unchecks,500);
+	setTimeout(unchecks,1000);
+	setTimeout(unchecks,2000);
+	
+	//
+	return true;
+}
+
+function try_uncheck_playlists_old() {
+    var element=document.querySelector('div.ytd-add-to-playlist-renderer#playlists');
     
-    return false;
+    if(!element) {
+		return false;
+	}
+	
+	//
+	function unchecks(){
+		element.querySelectorAll('[aria-checked="true"]').forEach(x=>x.click());
+	}
+	
+	unchecks();
+	setTimeout(unchecks,500);
+	setTimeout(unchecks,1000);
+	setTimeout(unchecks,2000);
+
+	//
+	return true;
 }
 
 function unplaylist() {
